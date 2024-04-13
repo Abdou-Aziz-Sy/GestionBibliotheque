@@ -35,7 +35,7 @@ public class Bibliotheque {
         }
         return null; // Livre non trouvé
     }
-
+//ca marche pas
     public Livre rechercherLivreParISBN(String ISBN) {
         for (Livre livre : livres) {
             if (livre.getISBN().equals(ISBN)) {
