@@ -1,8 +1,9 @@
 import java.util.Scanner;
 
 public class Interfaces {
-    private  Bibliotheque bibliotheque;
-    private Scanner sc;
+
+    private   Bibliotheque bibliotheque = new Bibliotheque();
+    protected Scanner sc;
 
     protected boolean Status;
     public Interfaces(Bibliotheque bibliotheque) {
@@ -13,14 +14,16 @@ public class Interfaces {
         System.out.println("===== MENU PRINCIPAL =====");
         System.out.println("1. Empunter  Livre(s)");
         System.out.println("2. Retourner Livre(s)");
-        System.out.println("3. Deconnexion");
+        System.out.println("3. Rechercher Livre(s)");
+        System.out.println("4. Deconnexion");
         System.out.print("Choisissez une Option : ");
     }
     public void afficherMenuPrincipalBibliothecaire() {
         System.out.println("===== MENU PRINCIPAL =====");
         System.out.println("1. Gestion des Livres");
         System.out.println("2. Gestion des Utilisateurs");
-        System.out.println("3. Deconnexion");
+        System.out.println("3. Statistiques Bibliotheque");
+        System.out.println("4. Deconnexion");
         System.out.print("Choisissez une Option : ");
     }
     public void afficherMenuGestionLivres() {
@@ -28,7 +31,9 @@ public class Interfaces {
         System.out.println("1. Ajouter un Livre");
         System.out.println("2. Supprimer un Livre");
         System.out.println("3. Rechercher un Livre");
-        System.out.println("4. Retour au menu Principal");
+        System.out.println("4. Enregistrer un Emprunt");
+        System.out.println("5. Enregistrer un Retour");
+        System.out.println("6. Retour au menu Principal");
         System.out.print("Choisissez une Option : ");
     }
 
@@ -37,6 +42,14 @@ public class Interfaces {
         System.out.println("1. Ajouter un Utilisateur");
         System.out.println("2. Vérifier l'éligibilité d'un Utilisateur");
         System.out.println("3. Retour au menu Principal");
+        System.out.print("Choisissez une Option : ");
+    }
+    public void MenuRechercheLivre(){
+        System.out.println("===== RECHERCHE LIVRE =====");
+        System.out.println("1. PAR TITRE");
+        System.out.println("2. PAR AUTEUR");
+        System.out.println("3. PAR ISBN");
+        System.out.println("4. Retour au menu Principal");
         System.out.print("Choisissez une Option : ");
     }
     public void gererLivres() {
@@ -48,13 +61,18 @@ public class Interfaces {
 
             switch (choix) {
                 case 1:
-                    // Logique pour ajouter un livre
+                    bibliotheque.ajouterLivre(livre);
                     break;
                 case 2:
-                    // Logique pour supprimer un livre
+                    bibliotheque.supprimerLivre(Livre);
                     break;
                 case 3:
-                    // Logique pour rechercher un livre
+                    MenuRechercheLivre();
+                    int option
+                     option = sc.nextInt
+                    if(option == 1)
+                        System.out.println("Saisir l'auteur du Livre :");
+
                     break;
                 case 4:
                     System.out.println("Retour au menu principal...");
@@ -73,7 +91,7 @@ public class Interfaces {
 
             switch (choix) {
                 case 1:
-                    //
+
                     break;
                 case 2:
                     //
@@ -110,7 +128,7 @@ public class Interfaces {
             } while (choix != 3);
         }
         else{
-
+            afficherMenuPrincipalUtilisateur();
         }
     }
 
