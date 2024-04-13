@@ -69,8 +69,9 @@ public class Interfaces {
                 case 3:
                     MenuRechercheLivre();
                     int option
+                     option = sc.nextInt
                     if(option == 1)
-                        System.out.println("Saisir l'auteur du Livre...");
+                        System.out.println("Saisir l'auteur du Livre :");
 
                     break;
                 case 4:
