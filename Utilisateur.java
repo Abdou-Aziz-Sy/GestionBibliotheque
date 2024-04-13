@@ -5,17 +5,30 @@ public class Utilisateur {
     int numeroIdentification;
     ArrayList<Livre> livresEmpruntes;
     boolean cotisationAJour=false;
+    boolean Status;
 
     public Utilisateur(String nom, int numeroIdentification){
         this.nom=nom;
         this.numeroIdentification=numeroIdentification;
         this.livresEmpruntes = new ArrayList<>();
     }
+    public boolean getCotisationAJour() {
+        return cotisationAJour;
+    }
+    public boolean EstDisponible(){
+        return Status;
+    }
 
     public void emprunterLivre(Livre livre) {
         if (cotisationAJour) {
-            livresEmpruntes.add(livre);
-            System.out.println("Le livre \"" + livre.getTitre() + "\" a été emprunté par"+ nom);
+            if (Status) {
+                System.out.println("Le livre :"+livre.getTitre() +"est disponible, Vous pouvez faire l'emprunt");
+                livresEmpruntes.add(livre);
+                System.out.println("Le livre \"" + livre.getTitre() + "\" a été emprunté par"+ nom);
+            }else{
+                System.out.println("Le livre :"+livre.getTitre() +"n'est pas disponible");
+            }
+           
         } else {
             System.out.println("Votre cotisation doit être à jour pour emprunter un livre.");
         }
