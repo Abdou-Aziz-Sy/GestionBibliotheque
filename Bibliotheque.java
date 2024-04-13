@@ -4,15 +4,15 @@ import java.util.Scanner;
 
 public class Bibliotheque {
     private ArrayList<Livre> livres;
-    private HashMap<Utilisateur, ArrayList<Livre>> livresEmpruntés;
+    private HashMap<Utilisateur, ArrayList<Livre>> livresEmpruntes;
 
     public Bibliotheque() {
         this.livres = new ArrayList<>();
-        this.livresEmpruntés = new HashMap<>();
+        this.livresEmpruntes = new HashMap<>();
     }
-    Scanner scanner = new Scanner(System.in);
 
     public void ajouterLivre() {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Veuillez saisir les détails du livre :");
         System.out.print("Titre : ");
         String titre = scanner.nextLine();
@@ -28,10 +28,29 @@ public class Bibliotheque {
         String ISBN = scanner.nextLine();
         Livre livre = new Livre(titre, auteur, anneePublication, ISBN);
         livres.add(livre);
+        scanner.close();
     }
-
-    public void supprimerLivre(Livre livre) {
-        livres.remove(livre);
+    // Méthode permettant de supprimer un livre à partir de son ISBN
+    public void supprimerLivre() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Entrez l'ISBN du livre à supprimer : ");
+        String ISBN = scanner.nextLine();
+    
+        Livre livreASupprimer = null;
+        for (Livre livre : livres) {
+            if (livre.getISBN().equals(ISBN)) {
+                livreASupprimer = livre;
+                break;
+            }
+        }
+    
+        if (livreASupprimer != null) {
+            livres.remove(livreASupprimer);
+            System.out.println("Le livre a été supprimé avec succès.");
+        } else {
+            System.out.println("Livre non trouvé.");
+        }
+        scanner.close();
     }
 
     public Livre rechercherLivreParTitre(String titre) {
@@ -40,6 +59,7 @@ public class Bibliotheque {
                 return livre;
             }
         }
+        System.out.println("Aucun livre du nom " + titre);
         return null; // Livre non trouvé
     }
 
@@ -49,6 +69,7 @@ public class Bibliotheque {
                 return livre;
             }
         }
+        System.out.println("Livre non trouvé pour l'auteur " + auteur);
         return null; // Livre non trouvé
     }
 
@@ -58,23 +79,34 @@ public class Bibliotheque {
                 return livre;
             }
         }
+        System.out.println("Aucun livre ne correspond à l'ISBN : " + ISBN);
         return null; // Livre non trouvé
     }
 
-    public void emprunterLivre(Utilisateur utilisateur, Livre livre) {
-        if (!livresEmpruntés.containsKey(utilisateur)) {
-            livresEmpruntés.put(utilisateur, new ArrayList<>());
+    public void enregistrerEmprunt(Utilisateur utilisateur, Livre livre) {
+        if (livresEmpruntes.containsKey(utilisateur)) {
+            ArrayList<Livre> livresEmpruntesUtilisateur = livresEmpruntes.get(utilisateur);
+            livresEmpruntesUtilisateur.add(livre);
+            livresEmpruntes.put(utilisateur, livresEmpruntesUtilisateur);
+        } else {
+            ArrayList<Livre> livresEmpruntesUtilisateur = new ArrayList<>();
+            livresEmpruntesUtilisateur.add(livre);
+            livresEmpruntes.put(utilisateur, livresEmpruntesUtilisateur);
         }
-        livresEmpruntés.get(utilisateur).add(livre);
     }
 
-    public void retournerLivre(Utilisateur utilisateur, Livre livre) {
-        livresEmpruntés.get(utilisateur).remove(livre);
+    public void enregistrerRetour(Utilisateur utilisateur, Livre livre) {
+        if (livresEmpruntes.containsKey(utilisateur)) {
+            ArrayList<Livre> livresEmpruntesUtilisateur = livresEmpruntes.get(utilisateur);
+            livresEmpruntesUtilisateur.remove(livre);
+            livresEmpruntes.put(utilisateur, livresEmpruntesUtilisateur);
+        }
     }
-
+        
     public void afficherStatistiquesBibliothèque() {
-        System.out.println("Statistiques de la bibliothèque :");
-        System.out.println("Nombre total de livres : " + livres.size());
-        System.out.println("Nombre de livres empruntés : " + livresEmpruntés.size());
+        System.out.println("---*Statistiques de la bibliothèque*----- :");
+        System.out.println("**Nombre total de livres : " + livres.size());
+        System.out.println("**Nombre de livres empruntés : " + livresEmpruntes.size());
     }
+    
 }
