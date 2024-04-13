@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Bibliotheque {
     private ArrayList<Livre> livres;
@@ -9,8 +10,23 @@ public class Bibliotheque {
         this.livres = new ArrayList<>();
         this.livresEmpruntés = new HashMap<>();
     }
+    Scanner scanner = new Scanner(System.in);
 
-    public void ajouterLivre(Livre livre) {
+    public void ajouterLivre() {
+        System.out.println("Veuillez saisir les détails du livre :");
+        System.out.print("Titre : ");
+        String titre = scanner.nextLine();
+        
+        System.out.print("Auteur : ");
+        String auteur = scanner.nextLine();
+        
+        System.out.print("Année de publication : ");
+        int anneePublication = scanner.nextInt();
+        scanner.nextLine(); // Pour consommer le retour à la ligne après nextInt()
+        
+        System.out.print("ISBN : ");
+        String ISBN = scanner.nextLine();
+        Livre livre = new Livre(titre, auteur, anneePublication, ISBN);
         livres.add(livre);
     }
 
@@ -35,7 +51,7 @@ public class Bibliotheque {
         }
         return null; // Livre non trouvé
     }
-//ca marche pas
+
     public Livre rechercherLivreParISBN(String ISBN) {
         for (Livre livre : livres) {
             if (livre.getISBN().equals(ISBN)) {
