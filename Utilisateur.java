@@ -6,7 +6,9 @@ public class Utilisateur {
     ArrayList<Livre> livresEmpruntes;
     boolean cotisationAJour=false;
 
-    public Utilisateur(String nom, int numeroIdentification,String status){
+
+
+    public Utilisateur(String nom, int numeroIdentification){
         this.nom=nom;
         this.numeroIdentification=numeroIdentification;
         this.status = status;
