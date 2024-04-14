@@ -5,7 +5,8 @@ public class Interfaces {
     private   Bibliotheque bibliotheque = new Bibliotheque();
     protected Scanner sc;
 
-    protected boolean Status;
+    // le type nous permet de distingue les utilisateur(type=false) du bibliothecaire(type=true) responsable du systéme
+    protected boolean Type;
     public Interfaces(Bibliotheque bibliotheque) {
         this.bibliotheque = bibliotheque;
         this.sc = new Scanner(System.in);
@@ -61,10 +62,10 @@ public class Interfaces {
 
             switch (choix) {
                 case 1:
-                    bibliotheque.ajouterLivre(livre);
+                    bibliotheque.ajouterLivre();
                     break;
                 case 2:
-                    bibliotheque.supprimerLivre(Livre);
+                    bibliotheque.supprimerLivre();
                     break;
                 case 3:
                     MenuRechercheLivre();
@@ -123,7 +124,7 @@ public class Interfaces {
         } while (choix != 3);
     }
     public void demarrer() {
-        if (Status) {
+        if (Type) {
             int choix;
             do {
                 afficherMenuPrincipalBibliothecaire();
