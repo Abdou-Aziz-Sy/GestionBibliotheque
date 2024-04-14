@@ -1,8 +1,4 @@
 import java.util.Scanner;
-import java.sql.*;
-import java.sql.DriverManager;
-import java.sql.Connection;
-
 
 public class Livre {
     // Attributs
@@ -51,64 +47,31 @@ public class Livre {
     public void setISBN(String ISBN) {
         this.ISBN = ISBN;
     }
-    
-    // Méthode toString()
-    @Override
-    public String toString() {
-        return "Livre{" +
-                "titre='" + titre + '\'' +
-                ", auteur='" + auteur + '\'' +
-                ", anneePublication=" + anneePublication +
-                ", ISBN='" + ISBN + '\'' +
-                '}';
+
+    // Méthode toString pour obtenir les détails du livre en fonction de l'ISBN
+    public String toString(String ISBN) {
+         // On cherche si l'ISBN correspond à celui d'un livre dans la liste 
+        if (this.getISBN().equals(ISBN)) {
+            return "Livre " + ISBN + " :\n" +
+                    "titre='" + this.getTitre() + "'\n" +
+                    "auteur='" + this.getAuteur() + "'\n" +
+                    "anneePublication=" + this.getAnneePublication() + "\n" +
+                    "ISBN='" + this.getISBN() + "'";
+        } else {
+             // Si le livre n'est pas trouvé
+            return "Aucun livre avec l'ISBN: " + ISBN;
+        }
     }
 
-    public static Livre saisirLivre(Scanner scanner) {
-        System.out.println("Veuillez saisir les détails du livre :");
-        System.out.print("Titre : ");
-        String titre = scanner.nextLine();
-        
-        System.out.print("Auteur : ");
-        String auteur = scanner.nextLine();
-        
-        System.out.print("Année de publication : ");
-        int anneePublication = scanner.nextInt();
-        scanner.nextLine(); // Pour consommer le retour à la ligne après nextInt()
-        
-        System.out.print("ISBN : ");
-        String ISBN = scanner.nextLine();
-        
-        // Création et retour du livre saisi
-        return new Livre(titre, auteur, anneePublication, ISBN);
-    }
-    
-    public static void main(String[] args) {
+    // Méthode utilisant toString pour obtenir les détails du livre en fonction de l'ISBN
+    public void afficherDetails() {
         Scanner scanner = new Scanner(System.in);
-        
-        // Appel de la fonction pour saisir un livre
-        Livre livre = saisirLivre(scanner);
-        
-        // Affichage des détails du livre
-        System.out.println("Détails du livre :");
-        System.out.println(livre);
-        
+        // On demande à l'utilisateur l'ISBN du livre dont il souhaite avoir les détails
+        System.out.print("ISBN à afficher les détails : ");
+        String ISBN = scanner.nextLine();
+        // Application de la méthode toString
+        System.out.println(this.toString(ISBN));
         scanner.close();
-        Connection conn = null;
-        String dbURL = "jdbc:mysql://localhost:3306/bibliotheque";
-String username = "root";
-String password = "root@123";
- 
-try {
- 
-    conn = DriverManager.getConnection(dbURL, username, password);
- 
-    if (conn != null) {
-        System.out.println("Connected");
     }
-} catch (SQLException ex) {
-    ex.printStackTrace();
-}
-    }
-    }
-    
 
+}
