@@ -2,15 +2,18 @@ import java.util.Scanner;
 
 public class Interfaces {
 
-    private   Bibliotheque bibliotheque = new Bibliotheque();
-    protected Scanner sc;
-
+    private final Bibliotheque bibliotheque ;
+    protected Scanner sc =new Scanner(System.in);
+    private Utilisateur utilisateur;
     // le type nous permet de distingue les utilisateur(type=false) du bibliothecaire(type=true) responsable du systéme
     protected boolean Type;
-    public Interfaces(Bibliotheque bibliotheque) {
+
+    public Interfaces(Bibliotheque bibliotheque, Utilisateur utilisateur, boolean type) {
         this.bibliotheque = bibliotheque;
-        this.sc = new Scanner(System.in);
+        this.utilisateur = utilisateur;
+        Type = type;
     }
+
     public void afficherMenuPrincipalUtilisateur() {
         System.out.println("===== MENU PRINCIPAL =====");
         System.out.println("1. Empunter  Livre(s)");
@@ -53,7 +56,7 @@ public class Interfaces {
         System.out.println("4. Retour au menu Principal");
         System.out.print("Choisissez une Option : ");
     }
-    public void gererLivres() {
+    public void gererLivres(Utilisateur utilisateur) {
         int choix;
         do {
             afficherMenuGestionLivres();
@@ -86,12 +89,26 @@ public class Interfaces {
                         String isbn = sc.nextLine();
                         bibliotheque.rechercherLivreParISBN(isbn);
                     }
+                    if (option==4)
+                        gererLivres(utilisateur);
                     break;
                 case 4:
-                    //Enregistrement des emprunts
+                    System.out.println("Enregistrer un emprunt :");
+                    System.out.print("Entrez l'ISBN du livre : ");
+                    String isbnEmprunt = sc.nextLine();
+                    Livre livreEmprunt = bibliotheque.rechercherLivreParISBN(isbnEmprunt);
+                    if (livreEmprunt != null) {
+                        bibliotheque.enregistrerEmprunt(utilisateur, livreEmprunt);
+                    }
                     break;
                 case 5:
-                    //Enregistrement des retours
+                    System.out.println("Enregistrer un retour :");
+                    System.out.print("Entrez l'ISBN du livre : ");
+                    String isbnRetour = sc.nextLine();
+                    Livre livreRetour = bibliotheque.rechercherLivreParISBN(isbnRetour);
+                    if (livreRetour != null) {
+                        bibliotheque.enregistrerRetour(utilisateur, livreRetour);
+                    }
                     break;
                 case 6:
                     //Retour Menu principale
@@ -123,7 +140,7 @@ public class Interfaces {
             }
         } while (choix != 3);
     }
-    public void demarrer() {
+    public void demarrer(Utilisateur utilisateur) {
         if (Type) {
             int choix;
             do {
@@ -133,7 +150,7 @@ public class Interfaces {
 
                 switch (choix) {
                     case 1:
-                        gererLivres();
+                        gererLivres(utilisateur);
                         break;
                     case 2:
                         gererUtilisateurs();
@@ -151,9 +168,5 @@ public class Interfaces {
         }
     }
 
-    public static void main(String[] args){
-        Bibliotheque B = new Bibliotheque();
-        Interfaces it = new Interfaces(B);
-        it.afficherMenuPrincipalUtilisateur();
-    }
+
 }
