@@ -20,6 +20,7 @@
         }
 
         // Autres méthodes spécifiques au bibliothécaire, par exemple pour la gestion des utilisateurs, les statistiques, etc.
+        //Après tu y ajoute Enregistrer de nouveaux utilisateurs avec les informations telles que son numéroIdentification, Son ISBN, Je pense c'est ici qu'on doit le rajouter
     }
 
 

@@ -4,8 +4,8 @@ public class Interfaces {
 
     private final Bibliotheque bibliotheque ;
     protected Scanner sc =new Scanner(System.in);
-    private Utilisateur utilisateur;
-    // le type nous permet de distingue les utilisateur(type=false) du bibliothecaire(type=true) responsable du systéme
+    public Utilisateur utilisateur;
+    // le type nous permet de distinguer les utilisateurs(type=false) du bibliothecaire(type=true) responsable du systéme
     protected boolean Type;
 
     public Interfaces(Bibliotheque bibliotheque, Utilisateur utilisateur, boolean type) {
