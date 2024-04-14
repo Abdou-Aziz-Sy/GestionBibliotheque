@@ -7,7 +7,7 @@ public class Interfaces {
     public Utilisateur utilisateur;
     // le type nous permet de distinguer les utilisateurs(type=false) du bibliothecaire(type=true) responsable du systéme
     protected boolean Type;
-    private Utilisateur utilisateur;
+
 
 
     public Interfaces(Bibliotheque bibliotheque, Utilisateur utilisateur, boolean type) {
