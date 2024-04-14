@@ -7,6 +7,8 @@ public class Utilisateur {
     boolean cotisationAJour=false;
     boolean Status;
 
+
+
     public Utilisateur(String nom, int numeroIdentification){
         this.nom=nom;
         this.numeroIdentification=numeroIdentification;
