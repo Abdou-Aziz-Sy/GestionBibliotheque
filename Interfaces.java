@@ -75,6 +75,7 @@ public class Interfaces {
                     MenuRechercheLivre();
                     int option;
                     option = sc.nextInt();
+                    sc.nextLine(); // Pour vider la ligne du scanner
                     if(option == 1) {
                         System.out.println("Saisir le titre du Livre :");
                         String titre = sc.nextLine();
@@ -112,12 +113,14 @@ public class Interfaces {
                     }
                     break;
                 case 6:
-                        return;
+                    return;
                 default:
                     System.out.println("Choix invalide. Veuillez choisir une option valide.");
             }
-        } while (choix != 4);
+        } while (choix != 6);
     }
+
+
     public void gererUtilisateurs() {
         int choix;
         do {
@@ -127,17 +130,20 @@ public class Interfaces {
 
             switch (choix) {
                 case 1:
-                    //fonction pour ajout de utilisateur
+                    bibliotheque.ajouterUtilisateur();
                     break;
                 case 2:
-                   return;
+                    bibliotheque.supprimerUtilisateur();
+                    break;
+                case 3:
+                    return;
                 default:
                     System.out.println("Choix invalide. Veuillez choisir une option valide.");
             }
         } while (choix != 3);
     }
     public void demarrer(Utilisateur utilisateur,Bibliotheque bibliotheque) {
-        if (utilisateur.Status) {
+        if (utilisateur.status.equals("bibliothecaire")) {
             int choix;
             do {
                 afficherMenuPrincipalBibliothecaire();
@@ -173,31 +179,12 @@ public class Interfaces {
                     case 1:
                         // Option pour emprunter un livre
                         System.out.println("===== EMPRUNTER UN LIVRE =====");
-                        System.out.print("Entrez le titre du livre que vous souhaitez emprunter : ");
-                        String titreEmprunt = sc.nextLine();
-                        Livre livreEmprunt = bibliotheque.rechercherLivreParTitre(titreEmprunt);
-                        if (livreEmprunt != null) {
-                            if (utilisateur.cotisationAJour) {
-                                utilisateur.emprunterLivre(livreEmprunt);
-                            } else {
-                                System.out.println("Vous n'êtes pas éligible à emprunter un livre pour le moment.");
-                            }
-                        } else {
-                            System.out.println("Aucun livre trouvé avec le titre \"" + titreEmprunt + "\".");
-                        }
+                        utilisateur.emprunterLivre();
                         break;
                     case 2:
                         // Option pour retourner un livre
                         System.out.println("===== RETOURNER UN LIVRE =====");
-                        utilisateur.afficherLivresEmpruntes();
-                        System.out.print("Entrez le titre du livre que vous souhaitez retourner : ");
-                        String titreRetour = sc.nextLine();
-                        Livre livreRetour = bibliotheque.rechercherLivreParTitre(titreRetour);
-                        if (livreRetour != null) {
-                            utilisateur.retournerLivre(livreRetour);
-                        } else {
-                            System.out.println("Vous n'avez pas emprunté de livre avec le titre \"" + titreRetour + "\".");
-                        }
+                        utilisateur.retournerLivre();
                         break;
                     case 3:
                         // Option pour rechercher un livre

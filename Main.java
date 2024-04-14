@@ -1,9 +1,22 @@
 public class Main {
+public static void main(String[] args){
+
+
+    Bibliotheque bibliotheque = new Bibliotheque();
+    Utilisateur user = new Utilisateur("Aziz",2000,"bibliothecaire");
+    Interfaces IT = new Interfaces(bibliotheque,user);
+
+    IT.demarrer(user,bibliotheque);
+
+
+}
+
+
 //    public static void main(String[] args) {
 //        Bibliotheque bibliotheque = new Bibliotheque();
 //
 //        // Ajout de livres à la bibliothèque
-//        bibliotheque.ajouterLivre(new Livre("Titre 1", "Auteur 1", 2000, "ISBN1"));
+//
 //        bibliotheque.ajouterLivre(new Livre("Titre 2", "Auteur 2", 2005, "ISBN2"));
 //        // Ajout d'autres livres...
 //
