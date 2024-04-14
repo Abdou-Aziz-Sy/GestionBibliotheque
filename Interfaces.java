@@ -109,7 +109,7 @@ public class Interfaces {
 
             switch (choix) {
                 case 1:
-
+                    //
                     break;
                 case 2:
                     //
