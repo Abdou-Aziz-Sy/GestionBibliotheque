@@ -5,15 +5,14 @@ public class Interfaces {
     private final Bibliotheque bibliotheque ;
     protected Scanner sc =new Scanner(System.in);
     public Utilisateur utilisateur;
-    // le type nous permet de distinguer les utilisateurs(type=false) du bibliothecaire(type=true) responsable du systéme
-    protected boolean Type;
 
 
 
-    public Interfaces(Bibliotheque bibliotheque, Utilisateur utilisateur, boolean type) {
+
+    public Interfaces(Bibliotheque bibliotheque, Utilisateur utilisateur) {
         this.bibliotheque = bibliotheque;
         this.utilisateur = utilisateur;
-        Type = type;
+
     }
 
     public void afficherMenuPrincipalUtilisateur() {
@@ -136,7 +135,7 @@ public class Interfaces {
             }
         } while (choix != 3);
     }
-    public void demarrer(Utilisateur utilisateur) {
+    public void demarrer(Utilisateur utilisateur,Bibliotheque bibliotheque) {
         if (utilisateur.Status) {
             int choix;
             do {
@@ -160,10 +159,76 @@ public class Interfaces {
                     default:
                         System.out.println("Choix invalide. Veuillez choisir une option valide.");
                 }
-            } while (choix != 3);
+            } while (choix != 4);
         }
         else{
-            afficherMenuPrincipalUtilisateur();
+            int choix;
+            do {
+                afficherMenuPrincipalUtilisateur();
+                choix = sc.nextInt();
+                sc.nextLine(); // Pour vider la ligne du scanner
+
+                switch (choix) {
+                    case 1:
+                        // Option pour emprunter un livre
+                        System.out.println("===== EMPRUNTER UN LIVRE =====");
+                        System.out.print("Entrez le titre du livre que vous souhaitez emprunter : ");
+                        String titreEmprunt = sc.nextLine();
+                        Livre livreEmprunt = bibliotheque.rechercherLivreParTitre(titreEmprunt);
+                        if (livreEmprunt != null) {
+                            if (utilisateur.cotisationAJour) {
+                                utilisateur.emprunterLivre(livreEmprunt);
+                            } else {
+                                System.out.println("Vous n'êtes pas éligible à emprunter un livre pour le moment.");
+                            }
+                        } else {
+                            System.out.println("Aucun livre trouvé avec le titre \"" + titreEmprunt + "\".");
+                        }
+                        break;
+                    case 2:
+                        // Option pour retourner un livre
+                        System.out.println("===== RETOURNER UN LIVRE =====");
+                        utilisateur.afficherLivresEmpruntes();
+                        System.out.print("Entrez le titre du livre que vous souhaitez retourner : ");
+                        String titreRetour = sc.nextLine();
+                        Livre livreRetour = bibliotheque.rechercherLivreParTitre(titreRetour);
+                        if (livreRetour != null) {
+                            utilisateur.retournerLivre(livreRetour);
+                        } else {
+                            System.out.println("Vous n'avez pas emprunté de livre avec le titre \"" + titreRetour + "\".");
+                        }
+                        break;
+                    case 3:
+                        // Option pour rechercher un livre
+                        System.out.println("===== RECHERCHER UN LIVRE =====");
+                        MenuRechercheLivre();
+                        int option;
+                        option = sc.nextInt();
+                        if(option == 1) {
+                            System.out.println("Saisir le titre du Livre :");
+                            String titre = sc.nextLine();
+                            bibliotheque.rechercherLivreParTitre(titre);
+                        }
+                        if(option == 2) {
+                            System.out.println("Saisir l'auteur du Livre :");
+                            String auteur = sc.nextLine();
+                            bibliotheque.rechercherLivreParAuteur(auteur);
+                        }
+                        if(option == 3) {
+                            System.out.println("Saisir ISBN du Livre :");
+                            String isbn = sc.nextLine();
+                            bibliotheque.rechercherLivreParISBN(isbn);
+                        }
+                        if (option==4)
+                        return;
+                    case 4:
+                        // Option pour se déconnecter
+                        System.out.println("Déconnexion...");
+                        break;
+                    default:
+                        System.out.println("Choix invalide. Veuillez choisir une option valide.");
+                }
+            } while (choix != 4);
         }
     }
 
