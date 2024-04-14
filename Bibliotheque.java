@@ -3,31 +3,40 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Bibliotheque {
-    private ArrayList<Livre> listeLivres;
-    private HashMap<Utilisateur, ArrayList<Livre>> empruntsUtilisateur;
-    private ArrayList<Utilisateur> utilisateurs;
+    private ArrayList<Livre> listeLivres; // Liste des livres disponibles
+    private HashMap<Utilisateur, ArrayList<Livre>> empruntsUtilisateur; // Liste des livres empruntés par utilisateur
+    private ArrayList<Utilisateur> utilisateurs;  // Liste des utilisateurs
+
+    // Constructeur
     public Bibliotheque() {
         this.listeLivres = new ArrayList<>();
         this.empruntsUtilisateur = new HashMap<>();
         this.utilisateurs = new ArrayList<>();
     }
 
+    // Méthode pour initialiser un utilisateur
     public void initialiserUtilisateur(String nom, int numeroIdentification) {
         Utilisateur utilisateur = new Utilisateur(nom, numeroIdentification, "utilisateur");
         utilisateurs.add(utilisateur);
     }
 
+
+    // Méthode pour initialiser un bibliothécaire
     public void initialiserBibliothecaire(String nom, int numeroIdentification) {
         Utilisateur bibliothecaire = new Utilisateur(nom, numeroIdentification, "bibliothecaire");
         utilisateurs.add(bibliothecaire);
     }
 
+
+    // Méthode pour afficher la liste des livres disponibles
     public void afficherListeLivres() {
         System.out.println("Liste des livres disponibles :");
         for (Livre livre : listeLivres) {
             System.out.println(livre);
         }
     }
+
+    // Méthode pour ajouter un livre
     public void ajouterLivre(Scanner scanner) {
         System.out.println("Veuillez saisir les détails du livre :");
         System.out.print("Titre : ");
@@ -87,6 +96,7 @@ public class Bibliotheque {
             }
         }
 
+        // Si le livre est trouvé, on le supprime
         if (livreASupprimer != null) {
             listeLivres.remove(livreASupprimer);
             System.out.println("Le livre a été supprimé avec succès.");
@@ -96,6 +106,7 @@ public class Bibliotheque {
 
     }
 
+    // Méthode pour rechercher un livre par son titre
     public Livre rechercherLivreParTitre(String titre) {
         for (Livre livre : listeLivres) {
             if (livre.getTitre().equals(titre)) {
@@ -107,6 +118,7 @@ public class Bibliotheque {
         return null; // Livre non trouvé
     }
 
+    // Méthode pour rechercher un livre par son auteur
     public Livre rechercherLivreParAuteur(String auteur) {
         for (Livre livre : listeLivres) {
             if (livre.getAuteur().equals(auteur)) {
@@ -117,6 +129,8 @@ public class Bibliotheque {
         return null; // Livre non trouvé
     }
 
+
+    // Méthode pour rechercher un livre par son ISBN
     public Livre rechercherLivreParISBN(String ISBN) {
         for (Livre livre : listeLivres) {
             if (livre.getISBN().equals(ISBN)) {
@@ -137,6 +151,7 @@ public class Bibliotheque {
     }
 
 
+    // Méthode pour enregistrer un emprunt
     public void enregistrerEmprunt(Utilisateur utilisateur, Livre livre) {
         if (empruntsUtilisateur.containsKey(utilisateur)) {
             ArrayList<Livre> livresEmpruntesUtilisateur = empruntsUtilisateur.get(utilisateur);
@@ -150,6 +165,8 @@ public class Bibliotheque {
         // Ajouter le livre à la liste des livres empruntés de l'utilisateur
         utilisateur.getLivresEmpruntes().add(livre);
     }
+
+    // Méthode pour enregistrer un retour
     public void enregistrerRetour(Utilisateur utilisateur, Livre livre) {
         if (empruntsUtilisateur.containsKey(utilisateur)) {
             ArrayList<Livre> livresEmpruntesUtilisateur = empruntsUtilisateur.get(utilisateur);
@@ -194,6 +211,8 @@ public class Bibliotheque {
             System.out.println("Utilisateur non trouvé.");
         }
     }
+
+    // Méthode pour afficher les statistiques de la bibliothèque
     public void afficherStatistiquesBibliothèque() {
         System.out.println("---*Statistiques de la bibliothèque*----- :");
         System.out.println("**Nombre total de listeLivres : " + listeLivres.size());
