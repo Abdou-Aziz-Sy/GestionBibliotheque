@@ -15,62 +15,59 @@ public class Utilisateur {
         this.livresEmpruntes = new ArrayList<>();
     }
 
-    public void emprunterLivre() {
+    public void emprunterLivre(Bibliotheque bibliotheque) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Veuillez saisir votre identifiant :");
         int identifiant = scanner.nextInt();
+        scanner.nextLine(); // Consume newline left-over
 
-        Bibliotheque bibliotheque = new Bibliotheque(); // Création de l'instance de la bibliothèque
         Utilisateur utilisateur = bibliotheque.trouverUtilisateurParIdentifiant(identifiant);
-
-        if (utilisateur != null) {
-            System.out.println("Veuillez saisir le titre du livre que vous souhaitez emprunter :");
-            String titre = scanner.nextLine();
-
-            Livre livre = bibliotheque.rechercherLivreParTitre(titre);
-
-            if (livre != null) {
-                bibliotheque.enregistrerEmprunt(utilisateur, livre);
-                System.out.println("Le livre \"" + livre.getTitre() + "\" a été emprunté par " + utilisateur.getNom());
-            } else {
-                System.out.println("Le livre avec le titre \"" + titre + "\" n'a pas été trouvé.");
-            }
-        } else {
+        if (utilisateur == null) {
             System.out.println("Utilisateur non trouvé.");
+            return;
         }
 
-        scanner.close();
+        System.out.println("Veuillez saisir le titre du livre que vous souhaitez emprunter :");
+        String titre = scanner.nextLine();
+
+        Livre livre = bibliotheque.rechercherLivreParTitre(titre);
+        if (livre == null) {
+            System.out.println("Le livre avec le titre \"" + titre + "\" n'a pas été trouvé.");
+            return;
+        }
+
+        bibliotheque.enregistrerEmprunt(utilisateur, livre);
+        System.out.println("Le livre \"" + livre.getTitre() + "\" a été emprunté par " + utilisateur.getNom());
     }
 
-    public void retournerLivre() {
+    public void retournerLivre(Bibliotheque bibliotheque) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Veuillez saisir votre identifiant :");
         int identifiant = scanner.nextInt();
+        scanner.nextLine(); // Consume newline left-over
 
-        Bibliotheque bibliotheque = new Bibliotheque(); // Création de l'instance de la bibliothèque
         Utilisateur utilisateur = bibliotheque.trouverUtilisateurParIdentifiant(identifiant);
-
-        if (utilisateur != null) {
-            if (!utilisateur.getLivresEmpruntes().isEmpty()) {
-                System.out.println("Veuillez saisir le titre du livre que vous souhaitez retourner :");
-                String titre = scanner.nextLine();
-
-                Livre livre = bibliotheque.rechercherLivreParTitre(titre);
-
-                if (livre != null && utilisateur.getLivresEmpruntes().contains(livre)) {
-                    bibliotheque.enregistrerRetour(utilisateur, livre);
-                    System.out.println("Le livre \"" + livre.getTitre() + "\" a été retourné par " + utilisateur.getNom());
-                } else {
-                    System.out.println("Vous n'avez pas emprunté le livre avec le titre \"" + titre + "\".");
-                }
-            } else {
-                System.out.println("Vous n'avez aucun livre emprunté.");
-            }
-        } else {
+        if (utilisateur == null) {
             System.out.println("Utilisateur non trouvé.");
+            return;
         }
 
-        scanner.close();
+        if (utilisateur.getLivresEmpruntes().isEmpty()) {
+            System.out.println("Vous n'avez aucun livre emprunté.");
+            return;
+        }
+
+        System.out.println("Veuillez saisir le titre du livre que vous souhaitez retourner :");
+        String titre = scanner.nextLine();
+
+        Livre livre = bibliotheque.rechercherLivreParTitre(titre);
+        if (livre == null || !utilisateur.getLivresEmpruntes().contains(livre)) {
+            System.out.println("Vous n'avez pas emprunté le livre avec le titre \"" + titre + "\".");
+            return;
+        }
+
+        bibliotheque.enregistrerRetour(utilisateur, livre);
+        System.out.println("Le livre \"" + livre.getTitre() + "\" a été retourné par " + utilisateur.getNom());
     }
        public void afficherLivresEmpruntes() {
         if (livresEmpruntes.isEmpty()) {
@@ -124,5 +121,5 @@ public class Utilisateur {
         this.status = status;
     }
 
-    
+
 }

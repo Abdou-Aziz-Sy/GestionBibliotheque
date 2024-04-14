@@ -5,30 +5,42 @@ import java.util.Scanner;
 public class Bibliotheque {
     private ArrayList<Livre> listeLivres;
     private HashMap<Utilisateur, ArrayList<Livre>> empruntsUtilisateur;
-    private ArrayList<Utilisateur> utilisateurs = null;
+    private ArrayList<Utilisateur> utilisateurs;
     public Bibliotheque() {
         this.listeLivres = new ArrayList<>();
         this.empruntsUtilisateur = new HashMap<>();
+        this.utilisateurs = new ArrayList<>();
     }
 
-    public void ajouterLivre() {
-        Scanner scanner = new Scanner(System.in);
+    public void initialiserUtilisateur(String nom, int numeroIdentification) {
+        Utilisateur utilisateur = new Utilisateur(nom, numeroIdentification, "utilisateur");
+        utilisateurs.add(utilisateur);
+    }
+
+    public void initialiserBibliothecaire(String nom, int numeroIdentification) {
+        Utilisateur bibliothecaire = new Utilisateur(nom, numeroIdentification, "bibliothecaire");
+        utilisateurs.add(bibliothecaire);
+    }
+
+    public void afficherListeLivres() {
+        System.out.println("Liste des livres disponibles :");
+        for (Livre livre : listeLivres) {
+            System.out.println(livre);
+        }
+    }
+    public void ajouterLivre(Scanner scanner) {
         System.out.println("Veuillez saisir les détails du livre :");
         System.out.print("Titre : ");
         String titre = scanner.nextLine();
-        
         System.out.print("Auteur : ");
         String auteur = scanner.nextLine();
-        
         System.out.print("Année de publication : ");
         int anneePublication = scanner.nextInt();
-        scanner.nextLine(); // Pour consommer le retour à la ligne après nextInt()
-        
         System.out.print("ISBN : ");
-        String ISBN = scanner.nextLine();
+        String ISBN = scanner.next();
         Livre livre = new Livre(titre, auteur, anneePublication, ISBN);
         listeLivres.add(livre);
-        scanner.close();
+        System.out.println("Le livre a été ajouté avec succès.");
     }
         // Méthode permettant de modifier un livre à partir de son ISBN
         public void modifierLivre() {
@@ -43,16 +55,16 @@ public class Bibliotheque {
                     System.out.print("Nouveau titre : ");
                     String nouveauTitre = scanner.nextLine();
                     livre.setTitre(nouveauTitre);
-                    
+
                     System.out.print("Nouvel auteur : ");
                     String nouvelAuteur = scanner.nextLine();
                     livre.setAuteur(nouvelAuteur);
-                    
+
                     System.out.print("Nouvelle année de publication : ");
                     int nouvelleAnneePublication = scanner.nextInt();
                     livre.setAnneePublication(nouvelleAnneePublication);
-                    scanner.nextLine(); 
-                    //Confirmation de la mise à jour 
+                    scanner.nextLine();
+                    //Confirmation de la mise à jour
                     System.out.println("Les informations du livre ont été mises à jour.");
                     scanner.close();
                     return;
@@ -63,11 +75,10 @@ public class Bibliotheque {
             scanner.close();
         }
     // Méthode permettant de supprimer un livre à partir de son ISBN
-    public void supprimerLivre() {
-        Scanner scanner = new Scanner(System.in);
+    public void supprimerLivre(Scanner SCA) {
         System.out.print("Entrez l'ISBN du livre à supprimer : ");
-        String ISBN = scanner.nextLine();
-    
+        String ISBN = SCA.nextLine();
+
         Livre livreASupprimer = null;
         for (Livre livre : listeLivres) {
             if (livre.getISBN().equals(ISBN)) {
@@ -75,19 +86,20 @@ public class Bibliotheque {
                 break;
             }
         }
-    
+
         if (livreASupprimer != null) {
             listeLivres.remove(livreASupprimer);
             System.out.println("Le livre a été supprimé avec succès.");
         } else {
             System.out.println("Livre non trouvé.");
         }
-        scanner.close();
+
     }
 
     public Livre rechercherLivreParTitre(String titre) {
         for (Livre livre : listeLivres) {
             if (livre.getTitre().equals(titre)) {
+                System.out.println("Livre trouvé: " + livre);
                 return livre;
             }
         }
@@ -123,7 +135,7 @@ public class Bibliotheque {
         }
         return null; // Aucun utilisateur trouvé avec cet identifiant
     }
-    
+
 
     public void enregistrerEmprunt(Utilisateur utilisateur, Livre livre) {
         if (empruntsUtilisateur.containsKey(utilisateur)) {
@@ -135,8 +147,9 @@ public class Bibliotheque {
             livresEmpruntesUtilisateur.add(livre);
             empruntsUtilisateur.put(utilisateur, livresEmpruntesUtilisateur);
         }
+        // Ajouter le livre à la liste des livres empruntés de l'utilisateur
+        utilisateur.getLivresEmpruntes().add(livre);
     }
-
     public void enregistrerRetour(Utilisateur utilisateur, Livre livre) {
         if (empruntsUtilisateur.containsKey(utilisateur)) {
             ArrayList<Livre> livresEmpruntesUtilisateur = empruntsUtilisateur.get(utilisateur);
@@ -145,29 +158,27 @@ public class Bibliotheque {
         }
     }
     // Méthode pour ajouter un nouvel utilisateur
-    public void ajouterUtilisateur() {
-        Scanner scanner = new Scanner(System.in);
+    public void ajouterUtilisateur(Scanner scanner) {
         System.out.println("Veuillez saisir les informations de l'utilisateur :");
         System.out.print("Nom : ");
-        String nom = scanner.nextLine();       
-        System.out.println("Quel est le statut de l'utilisateur(utilisateur ou bibliothecaire)"); 
-        String status = scanner.nextLine();  
-        
+        String nom = scanner.nextLine();
+        System.out.println("Quel est le statut de l'utilisateur(utilisateur ou bibliothecaire)");
+        String status = scanner.nextLine();
+
         System.out.print("Numéro d'identification : ");
         int numeroIdentification = scanner.nextInt();
         scanner.nextLine(); // Pour consommer le retour à la ligne après nextInt()
-        
+
         Utilisateur utilisateur = new Utilisateur(nom, numeroIdentification,status);
         utilisateurs.add(utilisateur);
-        scanner.close();
     }
 
     // Méthode pour supprimer un utilisateur
-    public void supprimerUtilisateur() {
-        Scanner scanner = new Scanner(System.in);
+    public void supprimerUtilisateur(Scanner scanner) {
         System.out.print("Entrez le numéro d'identification de l'utilisateur à supprimer : ");
         int numeroIdentification = scanner.nextInt();
-        
+        scanner.nextLine(); // Pour consommer le retour à la ligne après nextInt()
+
         Utilisateur utilisateurASupprimer = null;
         for (Utilisateur utilisateur : utilisateurs) {
             if (utilisateur.getNumeroIdentification() == numeroIdentification) {
@@ -175,20 +186,18 @@ public class Bibliotheque {
                 break;
             }
         }
-        
+
         if (utilisateurASupprimer != null) {
             utilisateurs.remove(utilisateurASupprimer);
             System.out.println("L'utilisateur a été supprimé avec succès.");
         } else {
             System.out.println("Utilisateur non trouvé.");
         }
-        scanner.close();
     }
-        
     public void afficherStatistiquesBibliothèque() {
         System.out.println("---*Statistiques de la bibliothèque*----- :");
         System.out.println("**Nombre total de listeLivres : " + listeLivres.size());
         System.out.println("**Nombre de listeLivres empruntés : " + empruntsUtilisateur.size());
     }
-    
+
 }

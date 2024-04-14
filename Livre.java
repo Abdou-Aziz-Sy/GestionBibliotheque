@@ -62,6 +62,15 @@ public class Livre {
             return "Aucun livre avec l'ISBN: " + ISBN;
         }
     }
+    public String toString() {
+        return "Livre {" +
+                "titre='" + titre + '\'' +
+                ", auteur='" + auteur + '\'' +
+                ", anneePublication=" + anneePublication +
+                ", ISBN='" + ISBN + '\'' +
+                '}';
+    }
+
 
     // Méthode utilisant toString pour obtenir les détails du livre en fonction de l'ISBN
     public void afficherDetails() {

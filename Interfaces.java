@@ -2,59 +2,64 @@ import java.util.Scanner;
 
 public class Interfaces {
 
-    private final Bibliotheque bibliotheque ;
-    protected Scanner sc =new Scanner(System.in);
+    private final Bibliotheque bibliotheque;
+    protected Scanner sc = new Scanner(System.in);
     public Utilisateur utilisateur;
 
-
-
-
-    public Interfaces(Bibliotheque bibliotheque, Utilisateur utilisateur) {
+    public Interfaces(Bibliotheque bibliotheque) {
         this.bibliotheque = bibliotheque;
         this.utilisateur = utilisateur;
-
     }
 
     public void afficherMenuPrincipalUtilisateur() {
-        System.out.println("===== MENU PRINCIPAL =====");
+        System.out.println("\n===== MENU PRINCIPAL =====");
         System.out.println("1. Empunter  Livre(s)");
         System.out.println("2. Retourner Livre(s)");
         System.out.println("3. Rechercher Livre(s)");
         System.out.println("4. Deconnexion");
+        System.out.println("==========================\n");
         System.out.print("Choisissez une Option : ");
     }
+
     public void afficherMenuPrincipalBibliothecaire() {
-        System.out.println("===== MENU PRINCIPAL =====");
+        System.out.println("\n===== MENU PRINCIPAL =====");
         System.out.println("1. Gestion des Livres");
         System.out.println("2. Gestion des Utilisateurs");
         System.out.println("3. Statistiques Bibliotheque");
         System.out.println("4. Deconnexion");
+        System.out.println("==========================\n");
         System.out.print("Choisissez une Option : ");
     }
+
     public void afficherMenuGestionLivres() {
-        System.out.println("===== GESTION DES LIVRES =====");
+        System.out.println("\n===== GESTION DES LIVRES =====");
         System.out.println("1. Ajouter un Livre");
         System.out.println("2. Supprimer un Livre");
         System.out.println("3. Rechercher un Livre");
         System.out.println("4. Enregistrer un Emprunt");
         System.out.println("5. Enregistrer un Retour");
-        System.out.println("6. Retour au menu Principal");
+        System.out.println("6. Modifier un Livre");
+        System.out.println("7. Retour au menu Principal");
+        System.out.println("==============================\n");
         System.out.print("Choisissez une Option : ");
     }
 
     public void afficherMenuGestionUtilisateurs() {
-        System.out.println("===== GESTION DES UTILISATEURS =====");
+        System.out.println("\n===== GESTION DES UTILISATEURS =====");
         System.out.println("1. Ajouter un Utilisateur");
         System.out.println("2. Supprimer un Utilisateur");
         System.out.println("3. Retour au menu Principal");
+        System.out.println("====================================\n");
         System.out.print("Choisissez une Option : ");
     }
-    public void MenuRechercheLivre(){
-        System.out.println("===== RECHERCHE LIVRE =====");
+
+    public void MenuRechercheLivre() {
+        System.out.println("\n===== RECHERCHE LIVRE =====");
         System.out.println("1. PAR TITRE");
         System.out.println("2. PAR AUTEUR");
         System.out.println("3. PAR ISBN");
         System.out.println("4. Retour au menu Principal");
+        System.out.println("===========================\n");
         System.out.print("Choisissez une Option : ");
     }
     public void gererLivres(Utilisateur utilisateur) {
@@ -62,36 +67,37 @@ public class Interfaces {
         do {
             afficherMenuGestionLivres();
             choix = sc.nextInt();
-           // Pour vider la ligne du scanner
+            sc.nextLine(); // Pour vider la ligne du scanner
 
             switch (choix) {
                 case 1:
-                    bibliotheque.ajouterLivre();
+                    bibliotheque.ajouterLivre(sc);
                     break;
                 case 2:
-                    bibliotheque.supprimerLivre();
+                    bibliotheque.supprimerLivre(sc);
                     break;
                 case 3:
                     MenuRechercheLivre();
                     int option;
                     option = sc.nextInt();
                     sc.nextLine(); // Pour vider la ligne du scanner
-                    if(option == 1) {
+                    if (option == 1) {
                         System.out.println("Saisir le titre du Livre :");
                         String titre = sc.nextLine();
-                        bibliotheque.rechercherLivreParTitre(titre);
+                        Livre livre = bibliotheque.rechercherLivreParTitre(titre);
+
                     }
-                    if(option == 2) {
+                    if (option == 2) {
                         System.out.println("Saisir l'auteur du Livre :");
                         String auteur = sc.nextLine();
                         bibliotheque.rechercherLivreParAuteur(auteur);
                     }
-                    if(option == 3) {
+                    if (option == 3) {
                         System.out.println("Saisir ISBN du Livre :");
                         String isbn = sc.nextLine();
                         bibliotheque.rechercherLivreParISBN(isbn);
                     }
-                    if (option==4)
+                    if (option == 4)
                         gererLivres(utilisateur);
                     break;
                 case 4:
@@ -113,6 +119,24 @@ public class Interfaces {
                     }
                     break;
                 case 6:
+                    System.out.println("Modifier un livre :");
+                    System.out.print("Entrez l'ISBN du livre : ");
+                    String isbn = sc.nextLine();
+                    Livre livre = bibliotheque.rechercherLivreParISBN(isbn);
+                    if (livre != null) {
+                        System.out.print("Entrez le nouveau titre : ");
+                        String titre = sc.nextLine();
+                        livre.setTitre(titre);
+                        System.out.print("Entrez le nouvel auteur : ");
+                        String auteur = sc.nextLine();
+                        livre.setAuteur(auteur);
+                        System.out.print("Entrez la nouvelle année de publication : ");
+                        int anneePublication = sc.nextInt();
+                        livre.setAnneePublication(anneePublication);
+                        System.out.println("Le livre a été modifié avec succès.");
+                    }
+                    break;
+                case 7:
                     return;
                 default:
                     System.out.println("Choix invalide. Veuillez choisir une option valide.");
@@ -120,29 +144,54 @@ public class Interfaces {
         } while (choix != 6);
     }
 
-
     public void gererUtilisateurs() {
         int choix;
         do {
             afficherMenuGestionUtilisateurs();
             choix = sc.nextInt();
-            sc.nextLine();
+            sc.nextLine(); // Pour vider la ligne du scanner
 
             switch (choix) {
                 case 1:
-                    bibliotheque.ajouterUtilisateur();
+                    bibliotheque.ajouterUtilisateur(sc);
                     break;
                 case 2:
-                    bibliotheque.supprimerUtilisateur();
+                    bibliotheque.supprimerUtilisateur(sc);
                     break;
                 case 3:
+                    MenuRechercheLivre();
+                    int option;
+                    option = sc.nextInt();
+                    sc.nextLine(); // Pour vider la ligne du scanner
+                    if (option == 1) {
+                        System.out.println("Saisir le titre du Livre :");
+                        String titre = sc.nextLine();
+                        Livre livre = bibliotheque.rechercherLivreParTitre(titre);
+
+                    }
+                    if (option == 2) {
+                        System.out.println("Saisir l'auteur du Livre :");
+                        String auteur = sc.nextLine();
+                        bibliotheque.rechercherLivreParAuteur(auteur);
+                    }
+                    if (option == 3) {
+                        System.out.println("Saisir ISBN du Livre :");
+                        String isbn = sc.nextLine();
+                        bibliotheque.rechercherLivreParISBN(isbn);
+                    }
+                    if (option == 4)
+                        return;
+                    break;
+                case 4:
                     return;
+
                 default:
                     System.out.println("Choix invalide. Veuillez choisir une option valide.");
             }
         } while (choix != 3);
     }
-    public void demarrer(Utilisateur utilisateur,Bibliotheque bibliotheque) {
+
+    public void demarrer(Utilisateur utilisateur, Bibliotheque bibliotheque) {
         if (utilisateur.status.equals("bibliothecaire")) {
             int choix;
             do {
@@ -162,13 +211,12 @@ public class Interfaces {
                         break;
                     case 4:
                         System.out.println("Au revoir !");
-                        break;
+                        return;
                     default:
                         System.out.println("Choix invalide. Veuillez choisir une option valide.");
                 }
             } while (choix != 4);
-        }
-        else{
+        } else {
             int choix;
             do {
                 afficherMenuPrincipalUtilisateur();
@@ -179,12 +227,12 @@ public class Interfaces {
                     case 1:
                         // Option pour emprunter un livre
                         System.out.println("===== EMPRUNTER UN LIVRE =====");
-                        utilisateur.emprunterLivre();
+                        utilisateur.emprunterLivre(bibliotheque);
                         break;
                     case 2:
                         // Option pour retourner un livre
                         System.out.println("===== RETOURNER UN LIVRE =====");
-                        utilisateur.retournerLivre();
+                        utilisateur.retournerLivre(bibliotheque);
                         break;
                     case 3:
                         // Option pour rechercher un livre
@@ -192,33 +240,32 @@ public class Interfaces {
                         MenuRechercheLivre();
                         int option;
                         option = sc.nextInt();
-                        if(option == 1) {
+                        sc.nextLine(); // Pour vider la ligne du scanner
+                        if (option == 1) {
                             System.out.println("Saisir le titre du Livre :");
                             String titre = sc.nextLine();
                             bibliotheque.rechercherLivreParTitre(titre);
                         }
-                        if(option == 2) {
+                        if (option == 2) {
                             System.out.println("Saisir l'auteur du Livre :");
                             String auteur = sc.nextLine();
                             bibliotheque.rechercherLivreParAuteur(auteur);
                         }
-                        if(option == 3) {
+                        if (option == 3) {
                             System.out.println("Saisir ISBN du Livre :");
                             String isbn = sc.nextLine();
                             bibliotheque.rechercherLivreParISBN(isbn);
                         }
-                        if (option==4)
-                        return;
+                        if (option == 4)
+                            return;
                     case 4:
                         // Option pour se déconnecter
                         System.out.println("Déconnexion...");
-                        break;
+                        return;
                     default:
                         System.out.println("Choix invalide. Veuillez choisir une option valide.");
                 }
             } while (choix != 4);
         }
     }
-
-
 }
