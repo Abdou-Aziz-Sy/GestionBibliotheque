@@ -82,6 +82,16 @@ public class Bibliotheque {
         System.out.println("Aucun livre ne correspond à l'ISBN : " + ISBN);
         return null; // Livre non trouvé
     }
+    //Méthode pour chercher un utilisateur par son identifiant
+    public Utilisateur trouverUtilisateurParIdentifiant(int identifiant) {
+        for (Utilisateur utilisateur : utilisateurs) {
+            if (utilisateur.getNumeroIdentification() == identifiant) {
+                return utilisateur;
+            }
+        }
+        return null; // Aucun utilisateur trouvé avec cet identifiant
+    }
+    
 
     public void enregistrerEmprunt(Utilisateur utilisateur, Livre livre) {
         if (empruntsUtilisateur.containsKey(utilisateur)) {
