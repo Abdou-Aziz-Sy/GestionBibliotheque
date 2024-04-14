@@ -30,6 +30,38 @@ public class Bibliotheque {
         listeLivres.add(livre);
         scanner.close();
     }
+        // Méthode permettant de modifier un livre à partir de son ISBN
+        public void modifierLivre() {
+            Scanner scanner = new Scanner(System.in);
+            // On demande à l'utilisateur l'ISBN du livre dont il souhaite modier
+            System.out.print("Entrez l'ISBN du livre à modifier : ");
+            String ISBN = scanner.nextLine();
+            for (Livre livre : listeLivres) {
+                if (livre.getISBN().equals(ISBN)) {
+                    // Si le livre est trouvé il rempli un formulaire pour modifier les informations
+                    System.out.println("Livre trouvé. Veuillez saisir les nouvelles informations :");
+                    System.out.print("Nouveau titre : ");
+                    String nouveauTitre = scanner.nextLine();
+                    livre.setTitre(nouveauTitre);
+                    
+                    System.out.print("Nouvel auteur : ");
+                    String nouvelAuteur = scanner.nextLine();
+                    livre.setAuteur(nouvelAuteur);
+                    
+                    System.out.print("Nouvelle année de publication : ");
+                    int nouvelleAnneePublication = scanner.nextInt();
+                    livre.setAnneePublication(nouvelleAnneePublication);
+                    scanner.nextLine(); 
+                    //Confirmation de la mise à jour 
+                    System.out.println("Les informations du livre ont été mises à jour.");
+                    scanner.close();
+                    return;
+                }
+            }
+            // Si le livre n'est trouvé
+            System.out.println("Aucun livre trouvé avec l'ISBN : " + ISBN);
+            scanner.close();
+        }
     // Méthode permettant de supprimer un livre à partir de son ISBN
     public void supprimerLivre() {
         Scanner scanner = new Scanner(System.in);
