@@ -5,13 +5,24 @@ public class Utilisateur {
     int numeroIdentification;
     ArrayList<Livre> livresEmpruntes;
     boolean cotisationAJour=false;
-    boolean Status;
+
+    // le type nous permet de distingue les utilisateur(type=false) du bibliothecaire(type=true) responsable du systéme
+    boolean Status = false ;
 
     public Utilisateur(String nom, int numeroIdentification){
         this.nom=nom;
         this.numeroIdentification=numeroIdentification;
         this.livresEmpruntes = new ArrayList<>();
     }
+
+    public Utilisateur(String nom, int numeroIdentification, ArrayList<Livre> livresEmpruntes, boolean cotisationAJour, boolean status) {
+        this.nom = nom;
+        this.numeroIdentification = numeroIdentification;
+        this.livresEmpruntes = livresEmpruntes;
+        this.cotisationAJour = cotisationAJour;
+        Status = status;
+    }
+
     public boolean getCotisationAJour() {
         return cotisationAJour;
     }

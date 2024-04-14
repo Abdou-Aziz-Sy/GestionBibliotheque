@@ -5,8 +5,7 @@ public class Interfaces {
     private final Bibliotheque bibliotheque ;
     protected Scanner sc =new Scanner(System.in);
     private Utilisateur utilisateur;
-    // le type nous permet de distingue les utilisateur(type=false) du bibliothecaire(type=true) responsable du systéme
-    protected boolean Type;
+
 
     public Interfaces(Bibliotheque bibliotheque, Utilisateur utilisateur, boolean type) {
         this.bibliotheque = bibliotheque;
@@ -44,8 +43,7 @@ public class Interfaces {
     public void afficherMenuGestionUtilisateurs() {
         System.out.println("===== GESTION DES UTILISATEURS =====");
         System.out.println("1. Ajouter un Utilisateur");
-        System.out.println("2. Vérifier l'éligibilité d'un Utilisateur");
-        System.out.println("3. Retour au menu Principal");
+        System.out.println("2. Retour au menu Principal");
         System.out.print("Choisissez une Option : ");
     }
     public void MenuRechercheLivre(){
@@ -111,8 +109,7 @@ public class Interfaces {
                     }
                     break;
                 case 6:
-                    //Retour Menu principale
-                    break;
+                        return;
                 default:
                     System.out.println("Choix invalide. Veuillez choisir une option valide.");
             }
@@ -127,21 +124,17 @@ public class Interfaces {
 
             switch (choix) {
                 case 1:
-                    //
+                    //fonction pour ajout de utilisateur
                     break;
                 case 2:
-                    //
-                    break;
-                case 3:
-                    System.out.println("Retour au menu principal...");
-                    break;
+                   return;
                 default:
                     System.out.println("Choix invalide. Veuillez choisir une option valide.");
             }
         } while (choix != 3);
     }
     public void demarrer(Utilisateur utilisateur) {
-        if (Type) {
+        if (utilisateur.Status) {
             int choix;
             do {
                 afficherMenuPrincipalBibliothecaire();
@@ -156,6 +149,9 @@ public class Interfaces {
                         gererUtilisateurs();
                         break;
                     case 3:
+                        bibliotheque.afficherStatistiquesBibliothèque();
+                        break;
+                    case 4:
                         System.out.println("Au revoir !");
                         break;
                     default:
