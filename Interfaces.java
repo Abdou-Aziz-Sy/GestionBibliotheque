@@ -68,14 +68,32 @@ public class Interfaces {
                     break;
                 case 3:
                     MenuRechercheLivre();
-                    int option
-                     option = sc.nextInt
-                    if(option == 1)
+                    int option;
+                     option = sc.nextInt();
+                    if(option == 1) {
+                        System.out.println("Saisir le titre du Livre :");
+                        String titre = sc.nextLine();
+                        bibliotheque.rechercherLivreParTitre(titre);
+                    }
+                    if(option == 2) {
                         System.out.println("Saisir l'auteur du Livre :");
-
+                        String auteur = sc.nextLine();
+                        bibliotheque.rechercherLivreParAuteur(auteur);
+                    }
+                    if(option == 3) {
+                        System.out.println("Saisir ISBN du Livre :");
+                        String isbn = sc.nextLine();
+                        bibliotheque.rechercherLivreParISBN(isbn);
+                    }
                     break;
                 case 4:
-                    System.out.println("Retour au menu principal...");
+                    //Enregistrement des emprunts
+                    break;
+                case 5:
+                    //Enregistrement des retours
+                    break;
+                case 6:
+                    //Retour Menu principale
                     break;
                 default:
                     System.out.println("Choix invalide. Veuillez choisir une option valide.");
@@ -87,7 +105,7 @@ public class Interfaces {
         do {
             afficherMenuGestionUtilisateurs();
             choix = sc.nextInt();
-            sc.nextLine(); //
+            sc.nextLine();
 
             switch (choix) {
                 case 1:
