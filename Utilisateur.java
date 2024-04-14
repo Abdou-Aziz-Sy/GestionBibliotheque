@@ -20,7 +20,7 @@ public class Utilisateur {
     public boolean EstDisponible(){
         return Status;
     }
-//pour permettre à l'utilisateur d'emprenter un livre 
+//pour permettre à l'utilisateur d'emprunter un livre 
     public void emprunterLivre(Livre livre) {
         if (cotisationAJour) {
             if (Status) {
