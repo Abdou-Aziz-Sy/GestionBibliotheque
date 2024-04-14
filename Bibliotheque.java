@@ -117,13 +117,9 @@ public class Bibliotheque {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Veuillez saisir les informations de l'utilisateur :");
         System.out.print("Nom : ");
-        String nom = scanner.nextLine();
-        String status = null;
-        //Conrole de saisie pour empécher l'utilisateur de saisir n'importe quoi
-        do{
-            System.out.println("Quel est le statut de l'utilisateur(utilisateur ou bibliothecaire)"); 
-             status = scanner.nextLine();  
-        }while(status!="utilisateur" || status!="bibliothecaire");
+        String nom = scanner.nextLine();       
+        System.out.println("Quel est le statut de l'utilisateur(utilisateur ou bibliothecaire)"); 
+        String status = scanner.nextLine();  
         
         System.out.print("Numéro d'identification : ");
         int numeroIdentification = scanner.nextInt();
