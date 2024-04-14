@@ -83,7 +83,7 @@ public class Bibliotheque {
         return null; // Livre non trouvé
     }
     public boolean verifierEligibiliteEmprunt(Utilisateur utilisateur) {
-        return utilisateur.estAJour();
+        return utilisateur.getCotisationAJour();
     }
     
     public void enregistrerEmprunt(Utilisateur utilisateur, Livre livre) {
