@@ -69,7 +69,7 @@ public class Interfaces {
                 case 3:
                     MenuRechercheLivre();
                     int option;
-                     option = sc.nextInt();
+                    option = sc.nextInt();
                     if(option == 1) {
                         System.out.println("Saisir le titre du Livre :");
                         String titre = sc.nextLine();
