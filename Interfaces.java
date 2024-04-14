@@ -45,7 +45,8 @@ public class Interfaces {
     public void afficherMenuGestionUtilisateurs() {
         System.out.println("===== GESTION DES UTILISATEURS =====");
         System.out.println("1. Ajouter un Utilisateur");
-        System.out.println("2. Retour au menu Principal");
+        System.out.println("2. Supprimer un Utilisateur");
+        System.out.println("3. Retour au menu Principal");
         System.out.print("Choisissez une Option : ");
     }
     public void MenuRechercheLivre(){

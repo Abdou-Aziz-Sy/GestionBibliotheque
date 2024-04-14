@@ -82,10 +82,7 @@ public class Bibliotheque {
         System.out.println("Aucun livre ne correspond à l'ISBN : " + ISBN);
         return null; // Livre non trouvé
     }
-    public boolean verifierEligibiliteEmprunt(Utilisateur utilisateur) {
-        return utilisateur.getCotisationAJour();
-    }
-    
+
     public void enregistrerEmprunt(Utilisateur utilisateur, Livre livre) {
         if (empruntsUtilisateur.containsKey(utilisateur)) {
             ArrayList<Livre> livresEmpruntesUtilisateur = empruntsUtilisateur.get(utilisateur);
