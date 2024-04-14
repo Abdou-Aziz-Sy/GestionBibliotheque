@@ -62,7 +62,7 @@ public class Interfaces {
         do {
             afficherMenuGestionLivres();
             choix = sc.nextInt();
-            sc.nextLine(); // Pour vider la ligne du scanner
+           // Pour vider la ligne du scanner
 
             switch (choix) {
                 case 1:

@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Bibliotheque {
     private ArrayList<Livre> listeLivres;
     private HashMap<Utilisateur, ArrayList<Livre>> empruntsUtilisateur;
-    private ArrayList<Utilisateur> utilisateurs;
+    private ArrayList<Utilisateur> utilisateurs = null;
     public Bibliotheque() {
         this.listeLivres = new ArrayList<>();
         this.empruntsUtilisateur = new HashMap<>();
